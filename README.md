@@ -1,3 +1,4 @@
+更新于2025年3月6日
 # clash_mihome_config
 clash/mihomo系列通用yaml（适用于openWRT-NIKKI插件及电脑端Mihome Party）
 
