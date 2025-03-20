@@ -1,7 +1,7 @@
 # 机场订阅，名称不能重复
 proxy-providers:
-  IPLC.VIP:
-    url: "https://mysub.cc/subscribe/16331/pBcEAFsC19/clash/"
+  机场1:
+    url: "机场链接"
     type: http
     interval: 86400
     health-check:
