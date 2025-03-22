@@ -1,6 +1,7 @@
 #补充网址代理访问
 DOMAIN-SUFFIX,gorelay.net
 DOMAIN-SUFFIX,ip2world.com
+DOMAIN-SUFFIX,unraid.net
 
 #GoRelay中转平台支付域名
 DOMAIN-SUFFIX,zuy.cc
