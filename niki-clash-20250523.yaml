@@ -12,7 +12,7 @@ proxy-providers:
       enable: true
       url: https://www.gstatic.com/generate_204
       interval: 300
-    proxy: 直连 
+    proxy: 直接连接 
     header:
       User-Agent:
       - "Clash"
@@ -21,15 +21,15 @@ proxy-providers:
 
 
 proxies:
-  - {name: 直连, type: direct}
-  - {name: 拒绝, type: reject}
+  - {name: 直接连接, type: direct}
+  - {name: 拒绝连接, type: reject}
 # ========================
 # 链式代理
 # ========================
   - name: 🇺🇸 链式落地-美国
     dialer-proxy: 链式前置
     type: socks5
-    server: server_url
+    server: proxy_url
     port: 20714
     username: xxx   # 账号
     password: xxx   # 密码
@@ -165,7 +165,7 @@ dns:
 default: &default
   type: select
   proxies:
-    - 直连
+    - 直接连接
     - 所有-手动
     - 所有-自动
     - 香港-故转
@@ -176,12 +176,12 @@ default: &default
     - 美国-故转
     - 英国-故转
     - 其他-故转
-    - 拒绝
+    - 拒绝连接
 
 proxy-groups:
 
   # 业务分流组
-  - {name: 链式前置, type: select, proxies: [新加坡-手动, 拒绝]}
+  - {name: 链式前置, type: select, proxies: [新加坡-手动, 拒绝连接]}
   - {name: ChatGPT, <<: *default}
   - {name: Claude, <<: *default}
   - {name: Meta AI, <<: *default}
@@ -190,11 +190,11 @@ proxy-groups:
   - {name: Telegram, <<: *default}
   - {name: Twitter(X), <<: *default}
   - {name: WhatsApp, <<: *default}
-  - {name: Meta, type: select, proxies: [直连, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝]}
+  - {name: Meta, type: select, proxies: [直接连接, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝连接]}
   - {name: Steam, <<: *default}
   - {name: Game, <<: *default}
   - {name: YouTube, <<: *default}
-  - {name: TikTok, type: select, proxies: [直连, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝]}
+  - {name: TikTok, type: select, proxies: [直接连接, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝连接]}
   - {name: Disney, <<: *default}
   - {name: Netflix, <<: *default}
   - {name: HBO, <<: *default}
@@ -213,14 +213,14 @@ proxy-groups:
   - name: 所有-手动
     type: select
     include-all: true
-    filter: "^((?!(直连|拒绝)).)*$"
+    filter: "^(?!.*(直接连接|拒绝连接|官\\s*网|剩\\s*余)).*$"
 
   - name: 所有-自动
     type: url-test
     include-all: true
     tolerance: 50
     interval: 300
-    filter: "^((?!(直连|拒绝)).)*$"
+    filter: "^(?!.*(直接连接|拒绝连接|官\\s*网|剩\\s*余)).*$"
 
 # 香港组
   - name: 香港-故转
@@ -381,14 +381,14 @@ proxy-groups:
   - name: 其他-手动
     type: select
     include-all: true
-    filter: "^(?!.*链式)(?!(.*(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧))).*$"
+    filter: "^(?!.*链式)(?!(.*(直接连接|拒绝连接|香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧|官\\s*网|剩\\s*余))).*$"
 
   - name: 其他-自动
     type: url-test
     include-all: true
     tolerance: 50
     interval: 300
-    filter: "^(?!.*链式)(?!(.*(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧))).*$"
+    filter: "^(?!.*链式)(?!(.*(直接连接|拒绝连接|香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬|官\\s*网|剩\\s*余🇧))).*$"
 
 # ========================
 # 规则引擎（rules）
