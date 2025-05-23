@@ -1,0 +1,494 @@
+# ========================
+# Clash-ALL 优化配置
+# ========================
+
+# 机场节点订阅
+proxy-providers:
+  IPLC.VIP:
+    url: "https://mysub.cc/subscribe/16331/pBcEAFsC19/clash/"
+    type: http
+    interval: 86400
+    health-check:
+      enable: true
+      url: https://www.gstatic.com/generate_204
+      interval: 300
+    proxy: 直连 
+    header:
+      User-Agent:
+      - "Clash"
+      - "mihomo"
+      - "Clash.meta"
+
+
+proxies:
+  - {name: 直连, type: direct}
+  - {name: 拒绝, type: reject}
+# ========================
+# 链式代理
+# ========================
+  - name: 🇺🇸 链式落地-美国
+    dialer-proxy: 链式前置
+    type: socks5
+    server: us146.kookeey.info
+    port: 20714
+    username: f9cadfcf   # 账号
+    password: ac07f3f8   # 密码
+    udp: true            # 是否支持UDP（根据需要开启）
+
+# ========================
+# 全局配置
+# ========================
+port: 7890
+socks-port: 7891
+redir-port: 7892
+mixed-port: 7893
+tproxy-port: 7894
+allow-lan: true
+bind-address: "*"
+ipv6: false
+unified-delay: true
+tcp-concurrent: true  # TCP 并发连接所有 IP, 将使用最快握手的 TCP
+log-level: warning
+
+# ========================
+#匹配进程 has 3 values:always, strict, off
+# always, 开启，强制匹配所有进程
+# strict, 默认，由 mihomo 判断是否开启
+# off, 不匹配进程，推荐在路由器上使用此模式
+# ========================
+find-process-mode: strict
+
+# interface-name: en0 #绑定网卡
+global-client-fingerprint: chrome #全局指纹
+
+# ========================
+#移动设备省电
+# ========================
+keep-alive-idle: 600
+keep-alive-interval: 15
+disable-keep-alive: false #前面两项开关，false为开，true为关
+
+# ========================
+# 策略组选择和fakeip缓存
+# ========================
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+# ========================  
+# 控制面板
+# ========================
+external-controller: 0.0.0.0:9090
+secret: ""
+external-ui: "/etc/mihomo/run/ui"
+external-ui-name: zashboard
+external-ui-url: "https://github.com/Zephyruso/zashboard/archive/refs/heads/gh-pages.zip"
+
+# ========================
+# 流量嗅探
+# ========================
+sniffer:
+  enable: true
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  force-domain:
+    - +.v2ex.com
+  skip-domain:
+    - "rule-set:Private_domain,CN_domain"
+    - "dlg.io.mi.com"
+    - "+.push.apple.com"
+    - "+.apple.com"
+    - "+.wechat.com"
+    - "+.qpic.cn"
+    - "+.qq.com"
+    - "+.wechatapp.com"
+    - "+.vivox.com"
+    - "+.oray.com"
+    - "+.sunlogin.net"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+
+# ========================    
+# 入站策略
+# ========================
+tun:
+  enable: true
+  stack: mixed  #三种模式 system/gvisor/mixed
+  dns-hijack: ["any:53", "tcp://any:53"]
+  auto-route: true
+  auto-redirect: true
+  auto-detect-interface: true
+
+# ========================  
+# DNS模块
+# ========================
+dns:
+  enable: true
+  listen: 0.0.0.0:1053
+  ipv6: false
+  respect-rules: true
+  enhanced-mode: fake-ip  # 模式切换 redir-host/fake-ip
+  fake-ip-range: 28.0.0.1/8
+  fake-ip-filter-mode: blacklist  # 模式切换 whitelist/blacklist 黑名单模式表示如果匹配成功则不返回 Fake-IP, 白名单模式时只有匹配成功才返回 Fake-IP
+  fake-ip-filter:
+    - "rule-set:Private_domain,CN_domain"
+    - "+.services.googleapis.cn"
+    - "+.xn--ngstr-lra8j.com"
+    - "time.*.com"
+    - "+.pool.ntp.org"
+    - "+.ntp.tencent.com"
+    - "+.ntp1.aliyun.com"
+    - "+.ntp.ntsc.ac.cn"
+    - "+.cn.ntp.org.cn"
+    - "+.aicen.xyz"
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  proxy-server-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  nameserver:  # namesever尽量用运营商提供的DNS
+    - 202.103.24.68
+    - 202.103.44.150
+#    - 223.5.5.5
+#    - 119.29.29.29
+
+# ========================
+# 策略组定义
+# ========================
+default: &default
+  type: select
+  proxies:
+    - 直连
+    - 所有-手动
+    - 所有-自动
+    - 香港-故转
+    - 台湾-故转
+    - 日本-故转
+    - 新加坡-故转
+    - 韩国-故转
+    - 美国-故转
+    - 英国-故转
+    - 其他-故转
+    - 拒绝
+
+proxy-groups:
+
+  # 业务分流组
+  - {name: 链式前置, type: select, proxies: [新加坡-手动, 拒绝]}
+  - {name: ChatGPT, <<: *default}
+  - {name: Claude, <<: *default}
+  - {name: Meta AI, <<: *default}
+  - {name: Perplexity, <<: *default}
+  - {name: GitHub, <<: *default}
+  - {name: Telegram, <<: *default}
+  - {name: Twitter(X), <<: *default}
+  - {name: WhatsApp, <<: *default}
+  - {name: Meta, type: select, proxies: [直连, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝]}
+  - {name: Steam, <<: *default}
+  - {name: Game, <<: *default}
+  - {name: YouTube, <<: *default}
+  - {name: TikTok, type: select, proxies: [直连, 🇺🇸 链式落地-美国, 所有-手动, 所有-自动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝]}
+  - {name: Disney, <<: *default}
+  - {name: Netflix, <<: *default}
+  - {name: HBO, <<: *default}
+  - {name: Spotify, <<: *default}
+  - {name: Crypto, <<: *default}
+  - {name: Amazon, <<: *default}
+  - {name: Apple, <<: *default}
+  - {name: Microsoft, <<: *default}
+  - {name: Google, <<: *default}
+  - {name: Test, <<: *default}
+  - {name: Block, <<: *default}
+  - {name: 国外, <<: *default}
+  - {name: 国内, <<: *default}
+  - {name: 其他, <<: *default}
+
+  - name: 所有-手动
+    type: select
+    include-all: true
+    filter: "^((?!(直连|拒绝)).)*$"
+
+  - name: 所有-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^((?!(直连|拒绝)).)*$"
+
+# 香港组
+  - name: 香港-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 香港-手动
+      - 香港-自动
+
+  - name: 香港-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg)"
+
+  - name: 香港-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg)"
+
+# 台湾组
+  - name: 台湾-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 台湾-手动
+      - 台湾-自动
+
+  - name: 台湾-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼)"
+
+  - name: 台湾-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼)"
+
+# 日本组
+  - name: 日本-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 日本-手动
+      - 日本-自动
+
+  - name: 日本-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(日本|jp|japan|tokyo|osaka|kyoto|🇯🇵)"
+
+  - name: 日本-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(日本|jp|japan|tokyo|osaka|kyoto|🇯🇵)"
+
+# 新加坡组
+  - name: 新加坡-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 新加坡-手动
+      - 新加坡-自动
+
+  - name: 新加坡-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(新加坡|sg|singapore|🇸🇬)"
+
+  - name: 新加坡-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(新加坡|sg|singapore|🇸🇬)"
+
+# 韩国组
+  - name: 韩国-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 韩国-手动
+      - 韩国-自动
+
+  - name: 韩国-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(韩国|kr|korea|seoul|🇰🇷)"
+
+  - name: 韩国-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(韩国|kr|korea|seoul|🇰🇷)"
+
+# 美国组
+  - name: 美国-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 美国-手动
+      - 美国-自动
+
+  - name: 美国-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸)"
+
+  - name: 美国-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸)"
+
+# 英国组
+  - name: 英国-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 英国-手动
+      - 英国-自动
+
+  - name: 英国-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式).*(?i)(英国|uk|united\\s*kingdom|london|🇬🇧)"
+
+  - name: 英国-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式).*(?i)(英国|uk|united\\s*kingdom|london|🇬🇧)"
+
+# 其他组
+  - name: 其他-故转
+    type: fallback
+    interval: 300
+    lazy: false
+    proxies:
+      - 其他-手动
+      - 其他-自动
+
+  - name: 其他-手动
+    type: select
+    include-all: true
+    filter: "^(?!.*链式)(?!(.*(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧))).*$"
+
+  - name: 其他-自动
+    type: url-test
+    include-all: true
+    tolerance: 50
+    interval: 300
+    filter: "^(?!.*链式)(?!(.*(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧))).*$"
+
+# ========================
+# 规则引擎（rules）
+# ========================
+rules:
+  - RULE-SET,Directlite_Domain,国内
+  - RULE-SET,Proxylite_Domain,国外
+  - RULE-SET,TEST_Domain,Test
+  - RULE-SET,Block_Domain,Block  
+  - RULE-SET,ChatGPT_Domain,ChatGPT
+  - RULE-SET,Claude_Domain,Claude
+  - RULE-SET,Meta_AI_Domain,Meta AI
+  - RULE-SET,Perplexity_Domain,Perplexity
+  - RULE-SET,Github_Domain,GitHub
+  - RULE-SET,Telegram_Domain,Telegram
+  - RULE-SET,Telegram_IP,Telegram,no-resolve
+  - RULE-SET,Twitter_Domain,Twitter(X)
+  - RULE-SET,Meta_domain,Meta
+  - RULE-SET,Amazon_Domain,Amazon
+  - RULE-SET,Apple_Domain,Apple
+  - RULE-SET,Apple_CN_Domain,Apple  
+  - RULE-SET,Microsoft_Domain,Microsoft
+  - RULE-SET,OKX_Domain,Crypto
+  - RULE-SET,Bybit_Domain,Crypto
+  - RULE-SET,Binance_Domain,Crypto
+  - RULE-SET,Youtube_Domain,YouTube
+  - RULE-SET,TikTok_Domain,TikTok
+  - RULE-SET,Netflix_Domain,Netflix
+  - RULE-SET,Netflix_IP,Netflix,no-resolve
+  - RULE-SET,Disney_Domain,Disney
+  - RULE-SET,HBO_Domain,HBO
+  - RULE-SET,Spotify_Domain,Spotify
+  - RULE-SET,Steam_Domain,Steam
+  - RULE-SET,Epic_Domain,Game
+  - RULE-SET,EA_Domain,Game
+  - RULE-SET,Blizzard_Domain,Game
+  - RULE-SET,UBI_Domain,Game
+  - RULE-SET,Sony_Domain,Game
+  - RULE-SET,Nintend_Domain,Game
+  - RULE-SET,Google_Domain,Google
+  - RULE-SET,Google_IP,Google,no-resolve
+  - RULE-SET,Proxy_Domain,国外
+  - RULE-SET,Globe_Domain,国外  
+  - RULE-SET,Direct_Domain,国内
+  - RULE-SET,CN_domain,国内
+  - RULE-SET,CN_IP,国内,no-resolve
+  - RULE-SET,Private_domain,国内
+  - MATCH,其他
+
+# ========================
+# 规则集提供者
+# ========================
+rule-anchor:
+  ip: &ip {type: http, interval: 86400, behavior: ipcidr, format: mrs}
+  domain: &domain {type: http, interval: 86400, behavior: domain, format: mrs}
+  class: &class {type: http, interval: 86400, behavior: classical, format: text}
+
+rule-providers:
+  Directlite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/DirectLite.list"}
+  Proxylite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/ProxyLite.list"}
+  TEST_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
+  ChatGPT_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
+  Claude_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Claude/Claude.list"}
+  Meta_AI_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/MetaAi.list"}
+  Perplexity_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/perplexity.mrs"}
+  Github_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/github.mrs"}
+  Telegram_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/telegram.mrs"}
+  Telegram_IP: {<<: *ip, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/telegram.mrs"}
+  Twitter_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/x.mrs"}
+  Meta_domain: {!!merge <<: *domain, url: "https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/meta.mrs"}
+  Amazon_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/amazon.mrs"}
+  Apple_CN_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple-cn.mrs"}
+  Apple_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/apple.mrs"} 
+  Microsoft_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/microsoft.mrs"}
+  OKX_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/okx.mrs"}
+  Bybit_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/bybit.mrs"}
+  Binance_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/binance.mrs"}
+  Youtube_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/youtube.mrs"}
+  TikTok_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/tiktok.mrs"}
+  Netflix_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/netflix.mrs"}
+  Netflix_IP: {<<: *ip, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/netflix.mrs"}
+  Disney_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/disney.mrs"}
+  HBO_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/hbo.mrs"}
+  Spotify_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/spotify.mrs"}
+  Steam_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/steam.mrs"}
+  Epic_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Epic/Epic.list"}
+  EA_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/EA/EA.list"}
+  Blizzard_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Blizzard/Blizzard.list"}
+  UBI_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/UBI/UBI.list"}
+  Sony_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Sony/Sony.list"}
+  Nintend_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Clash/Nintendo/Nintendo.list"}
+  Google_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/google.mrs"}
+  Google_IP: {<<: *ip, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/google.mrs"}
+  Proxy_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Proxy.list"}
+  Globe_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/Global/Global.list"} 
+  Direct_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Direct.list"}
+  CN_domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/cn.mrs"}
+  CN_IP: {<<: *ip, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geoip/cn.mrs"}
+  Private_domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/private.mrs"}
+  Block_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Block.list"}
+  
+  
+#  GateFireWall_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
