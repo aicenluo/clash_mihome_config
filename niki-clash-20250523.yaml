@@ -5,7 +5,7 @@
 # 机场节点订阅
 proxy-providers:
   IPLC.VIP:
-    url: "https://mysub.cc/subscribe/16331/pBcEAFsC19/clash/"
+    url: "机场订阅"
     type: http
     interval: 86400
     health-check:
@@ -29,10 +29,10 @@ proxies:
   - name: 🇺🇸 链式落地-美国
     dialer-proxy: 链式前置
     type: socks5
-    server: us146.kookeey.info
+    server: server_url
     port: 20714
-    username: f9cadfcf   # 账号
-    password: ac07f3f8   # 密码
+    username: xxx   # 账号
+    password: xxx   # 密码
     udp: true            # 是否支持UDP（根据需要开启）
 
 # ========================
