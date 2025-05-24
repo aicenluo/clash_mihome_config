@@ -5,7 +5,7 @@
 # 机场节点订阅
 proxy-providers:
   IPLC.VIP:
-    url: "机场订阅"
+    url: "https://mysub.cc/subscribe/16331/pBcEAFsC19/clash/"
     type: http
     interval: 86400
     health-check:
@@ -29,10 +29,10 @@ proxies:
   - name: 🇺🇸 链式落地-美国
     dialer-proxy: 链式前置
     type: socks5
-    server: proxy_url
+    server: us146.kookeey.info
     port: 20714
-    username: xxx   # 账号
-    password: xxx   # 密码
+    username: f9cadfcf   # 账号
+    password: ac07f3f8   # 密码
     udp: true            # 是否支持UDP（根据需要开启）
 
 # ========================
@@ -381,7 +381,7 @@ proxy-groups:
   - name: 其他-手动
     type: select
     include-all: true
-    filter: "^(?!.*链式)(?!(.*(直接连接|拒绝连接|香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧|官\\s*网|剩\\s*余))).*$"
+    filter: "^(?!.*链式)(?!(.*(香港|港|hk|hong\\s*kong|xianggang|🇭🇰|hkg|台湾|台灣|tw|tai\\s*wan|taiwan|taipei|🇹🇼|日本|jp|japan|tokyo|osaka|kyoto|🇯🇵|新加坡|sg|singapore|🇸🇬|韩国|kr|korea|seoul|🇰🇷|美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|🇺🇸|英国|uk|united\\s*kingdom|london|🇬🇧|官\\s*网|剩\\s*余))).*$"
 
   - name: 其他-自动
     type: url-test
