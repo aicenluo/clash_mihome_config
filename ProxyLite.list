@@ -6,7 +6,8 @@ DOMAIN-SUFFIX,unraid.net
 #GoRelay中转平台支付域名
 DOMAIN-SUFFIX,zuy.cc
 
-#雨果跨境支付域名
+#雨果跨境
+DOMAIN-SUFFIX,yuguo.com
 DOMAIN-SUFFIX,5upay.com
 
 #PT网站（代理访问）
