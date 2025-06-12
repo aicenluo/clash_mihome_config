@@ -7,7 +7,7 @@ clash/mihomo系列通用yaml（适用于openWRT-NIKKI插件及电脑端Mihome Pa
 规则集仓库地址：https://github.com/MetaCubeX/meta-rules-dat/tree/meta
 
 不良林大佬3月19日又更新了教程《全网最细】手把手教你定制自己的yaml文件，mihomo/clash全平台通用，告别早已落后的订阅转换，机场订阅 | 自建节点 | 链式代理 | DNS泄露 | 二进制规则转换、等全介绍！》https://www.youtube.com/watch?v=eUqf3lOhFSw。
-niki-clash-fallback是fallback策略，niki-clash-fallback-smart应用了smart策略。
+niki-clash-fallback应用了fallback策略，niki-clash-fallback-smart应用了smart策略。
 
 2.如果使用的是ImmortalWrt，需确保DHCP/DNS-常规-DNS 重定向选项处于关闭状态。原因是使用NIKKI插件进行透明代理时，DNS是由NIKKI直接劫持，而不需要像使用openclash时通过DNSMasq劫持，为避免两者冲突，故需关闭。相关详细教程见七尺宇大佬的教程视频《全网最全】openwrt完美插件 nikki 喂饭级教程 | 插件安装卸载、各项设置以及注意事项讲解、各种使用方式讲解| openwrt mihomo | mihomotproxy》：https://www.youtube.com/watch?v=sl8zK0dv7iM
 对应文档地址为：https://www.qichiyu.com/379.html
