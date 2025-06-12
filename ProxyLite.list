@@ -3,13 +3,6 @@ DOMAIN-SUFFIX,gorelay.net
 DOMAIN-SUFFIX,ip2world.com
 DOMAIN-SUFFIX,unraid.net
 
-#GoRelay中转平台支付域名
-DOMAIN-SUFFIX,zuy.cc
-
-#雨果跨境
-DOMAIN-SUFFIX,yuguo.com
-DOMAIN-SUFFIX,5upay.com
-
 #PT网站（代理访问）
 DOMAIN-SUFFIX,torrentleech.org
 DOMAIN-SUFFIX,carpt.net
@@ -24,10 +17,3 @@ DOMAIN-SUFFIX,ptcafe.club
 DOMAIN-SUFFIX,ubits.club
 DOMAIN-SUFFIX,hdfans.org
 DOMAIN-SUFFIX,ptchina.org
-
-#跨境电商站点
-DOMAIN-SUFFIX,cjdropshipping.com
-DOMAIN-SUFFIX,temu.com
-DOMAIN-SUFFIX,aliexpress.com
-DOMAIN-SUFFIX,shopify.com
-DOMAIN-SUFFIX,cofuze.com
