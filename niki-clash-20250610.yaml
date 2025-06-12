@@ -180,7 +180,7 @@ default: &default
 proxy-groups:
 
   # 业务分流组
-#  - {name: 链式前置, type: select, proxies: [新加坡-手动, 拒绝连接]}
+  - {name: E-commerce, type: select, proxies: [直接连接, 🇺🇸 链式落地-美国, 所有-手动, 香港-故转, 台湾-故转, 日本-故转, 新加坡-故转, 韩国-故转, 美国-故转, 英国-故转, 其他-故转, 拒绝连接]}
   - {name: 链式前置, <<: *default}
   - {name: ChatGPT, <<: *default}
   - {name: Claude, <<: *default}
@@ -396,6 +396,7 @@ proxy-groups:
 # 规则引擎（rules）
 # ========================
 rules:
+  - RULE-SET,E-commerce_Domain,E-commerce
   - RULE-SET,TEST_Domain,Test
   - RULE-SET,Block_Domain,Block  
   - RULE-SET,ChatGPT_Domain,ChatGPT
@@ -449,6 +450,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
+  E-commerce_Domain: {!!merge <<: *class, url: "https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/E-commerce.list"} 
   Directlite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/DirectLite.list"}
   Proxylite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/ProxyLite.list"}
   TEST_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
