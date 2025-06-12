@@ -5,38 +5,8 @@
 # 机场节点订阅
 proxy-providers:
 
-  天行DPN:
-    url: "https://txdpn6.my/api/v1/client/subscribe?token=c0f8f2d4bfcdec057556039e069f65a5&flag=shadowrocket"
-    type: http
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    proxy: 直接连接 
-    header:
-      User-Agent:
-      - "Clash"
-      - "mihomo"
-      - "Clash.meta"
-
-  小牛云:
-    url: "https://www.vns735p8.xyz/api/v1/client/subscribe?token=d59cc9b06e8e04c3d508b5e9748210c6&connection=relay"
-    type: http
-    interval: 86400
-    health-check:
-      enable: true
-      url: https://www.gstatic.com/generate_204
-      interval: 300
-    proxy: 直接连接 
-    header:
-      User-Agent:
-      - "Clash"
-      - "mihomo"
-      - "Clash.meta"
-
-  Bitz Net:
-    url: "https://s3.bbdmfetch.com/api/v1/client/subscribe?token=25b422d5fe793a997fd3e630e6948149"
+  机场名称:
+    url: "订阅URL"
     type: http
     interval: 86400
     health-check:
