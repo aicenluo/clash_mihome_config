@@ -437,7 +437,7 @@ rules:
   - RULE-SET,Globe_Domain,国外
   - RULE-SET,Direct_Domain,国内
   - RULE-SET,CN_domain,国内
-  - RULE-SET,CN_IP,国内,no-resolve
+  - RULE-SET,CN_IP,国内
   - RULE-SET,Private_domain,国内
   - MATCH,其他
 
