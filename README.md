@@ -14,4 +14,4 @@ niki-clash-fallback应用了fallback策略，niki-clash-fallback-smart应用了s
 
 3.另一个可供参考的为安格视界大佬的教程《Mihomo（Nikki）一键完美配置 ：个性分流 + Clash 面板 + 机场聚合 + IPv6 + 回家，绝不手搓 + 绝无DNS泄露 + 绝无DNS污染，完美网络26》：https://www.youtube.com/watch?v=RsVX8n1FOVg
 
-4.OpenClash Mihomo Smart 分支介绍（内核+模型下载）：[https://github.com/aicenluo/clash_mihome_config](https://github.com/vernesong/OpenClash/releases/tag/mihomo)
+4.OpenClash Mihomo Smart 分支介绍（内核+模型下载）：https://github.com/vernesong/OpenClash/releases/tag/mihomo
