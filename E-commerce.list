@@ -5,6 +5,9 @@ DOMAIN-SUFFIX,dsers.com
 DOMAIN-SUFFIX,pinterest.com
 DOMAIN-SUFFIX,pagepilot.ai
 
+#补充shopify
+DOMAIN-SUFFIX,shopifyapps.com
+
 #GoRelay中转平台支付域名
 DOMAIN-SUFFIX,zuy.cc
 
