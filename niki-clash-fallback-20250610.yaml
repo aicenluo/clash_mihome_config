@@ -451,7 +451,7 @@ rule-anchor:
   class: &class {type: http, interval: 86400, behavior: classical, format: text}
 
 rule-providers:
-  E-commerce_Domain: {!!merge <<: *class, url: "https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/E-commerce.list"}
+  E-commerce_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/E-commerce.list"}
   Paypal_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
   Directlite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/DirectLite.list"}
   Proxylite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/ProxyLite.list"}
