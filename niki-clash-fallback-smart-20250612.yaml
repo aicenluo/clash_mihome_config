@@ -423,6 +423,7 @@ proxy-groups:
 rules:
   - RULE-SET,E-commerce_Domain,E-commerce
   - RULE-SET,Paypal_Domain,E-commerce
+  - RULE-SET,Shopify_Domain,E-commerce
   - RULE-SET,TEST_Domain,Test
   - RULE-SET,Block_Domain,Block  
   - RULE-SET,ChatGPT_Domain,ChatGPT
@@ -477,8 +478,9 @@ rule-anchor:
 
 rule-providers:
   E-commerce_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/E-commerce.list"}
-  Paypal_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
   Directlite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/DirectLite.list"}
+  Shopify_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/refs/heads/meta/geo/geosite/shopify.mrs"}
+  Paypal_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/paypal.mrs"}
   Proxylite_Domain: {!!merge <<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/aicenluo/clash_mihome_config/refs/heads/main/ProxyLite.list"}
   TEST_Domain: {<<: *class, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/list/Check.list"}
   ChatGPT_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://github.com/MetaCubeX/meta-rules-dat/raw/refs/heads/meta/geo/geosite/openai.mrs"}
