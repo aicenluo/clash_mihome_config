@@ -6,7 +6,7 @@ DOMAIN-SUFFIX,pinterest.com
 DOMAIN-SUFFIX,pagepilot.ai
 
 #补充shopify
-DOMAIN-SUFFIX,shopifyapps.com
+DOMAIN-SUFFIX,merchant-analytics-api.shopifyapps.com
 
 #GoRelay中转平台支付域名
 DOMAIN-SUFFIX,zuy.cc
