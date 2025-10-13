@@ -7,6 +7,7 @@ DOMAIN-SUFFIX,pagepilot.ai
 DOMAIN-SUFFIX,confect.io
 DOMAIN-SUFFIX,payoneer
 DOMAIN-SUFFIX,aliexpress.com
+DOMAIN-KEYWORD,aliexpress
 DOMAIN-SUFFIX,feedr
 
 #GoRelay中转平台支付域名
@@ -14,6 +15,7 @@ DOMAIN-SUFFIX,zuy.cc
 
 #雨果跨境支付渠道
 DOMAIN-SUFFIX,5upay.com
+
 
 
 
