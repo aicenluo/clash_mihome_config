@@ -360,7 +360,7 @@ proxy-groups:
   - name: 美国-手动
     type: select
     include-all: true
-    filter: "^(?!.*(链式|中转|回国|港|日|台|印)).*(?i)(美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|san\\s*francisco|🇺🇸).*$"
+    filter: "^(?!.*(链式|中转|回国|港|日|台|印)).*(?i)(美国|\bus\b|usa|united\\s*states|new\\s*york|los\\s*angeles|san\\s*francisco|🇺🇸).*$"
 
   - name: 美国-智选
     type: smart
@@ -369,7 +369,7 @@ proxy-groups:
     uselightgbm: true
     collectdata: true
     interval: 300
-    filter: "^(?!.*(链式|中转|回国|港|日|台|印)).*(?i)(美国|us|usa|united\\s*states|new\\s*york|los\\s*angeles|san\\s*francisco|🇺🇸).*$"
+    filter: "^(?!.*(链式|中转|回国|港|日|台|印)).*(?i)(美国|\bus\b|usa|united\\s*states|new\\s*york|los\\s*angeles|san\\s*francisco|🇺🇸).*$"
 
 # 英国组
   - name: 英国-故转
@@ -527,3 +527,4 @@ rule-providers:
   
   
 #  GateFireWall_Domain: {<<: *domain, url: "https://github.moeyy.xyz/https://raw.githubusercontent.com/MetaCubeX/meta-rules-dat/meta/geo/geosite/gfw.mrs"}
+
