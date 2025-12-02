@@ -39,8 +39,3 @@ DOMAIN-SUFFIX,iplc.vip
 
 #Paypal.cn
 DOMAIN-SUFFIX,paypal.cn
-
-#steam
-DOMAIN,steamcdn-a.akamaihd.net
-DOMAIN-SUFFIX,cm.steampowered.com
-DOMAIN-SUFFIX,steamserver.net
