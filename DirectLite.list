@@ -34,8 +34,9 @@ DOMAIN-SUFFIX,ptzone.xyz
 DOMAIN-SUFFIX,woniu.video
 
 #IPLC.VIP
-DOMAIN-SUFFIX,thirdislandchain.com
-DOMAIN-SUFFIX,iplc.vip
+#DOMAIN-SUFFIX,thirdislandchain.com
+#DOMAIN-SUFFIX,iplc.vip
 
 #Paypal.cn
 DOMAIN-SUFFIX,paypal.cn
+
