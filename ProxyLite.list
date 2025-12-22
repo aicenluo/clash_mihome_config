@@ -2,6 +2,9 @@
 DOMAIN-SUFFIX,gorelay.net
 DOMAIN-SUFFIX,ip2world.com
 DOMAIN-SUFFIX,unraid.net
+
+#IPLC.VIP
+DOMAIN-SUFFIX,thirdislandchain.com
 DOMAIN-SUFFIX,iplc.vip
 
 #PT网站（代理访问）
@@ -18,6 +21,7 @@ DOMAIN-SUFFIX,ptcafe.club
 DOMAIN-SUFFIX,ubits.club
 DOMAIN-SUFFIX,hdfans.org
 DOMAIN-SUFFIX,ptchina.org
+
 
 
 
