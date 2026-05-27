@@ -42,3 +42,6 @@ DOMAIN-SUFFIX,paypal.cn
 
 #土区apple礼品卡购买地址
 DOMAIN-SUFFIX,seagm.com
+
+#可画
+DOMAIN-SUFFIX,canva.cn
