@@ -58,7 +58,7 @@ DOMAIN-SUFFIX,ozon.dev
 DOMAIN-SUFFIX,ozon.express
 DOMAIN-SUFFIX,ozon.kz
 DOMAIN-SUFFIX,ozon.li
-DOMAIN-SUFFIX,ozon.ru
+#DOMAIN-SUFFIX,ozon.ru
 DOMAIN-SUFFIX,ozon.tech
 DOMAIN-SUFFIX,ozon.tm
 DOMAIN-SUFFIX,ozon.travel
