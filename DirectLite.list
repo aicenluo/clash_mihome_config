@@ -37,6 +37,9 @@ DOMAIN-SUFFIX,woniu.video
 #DOMAIN-SUFFIX,thirdislandchain.com
 #DOMAIN-SUFFIX,iplc.vip
 
+#WestData
+DOMAIN-SUFFIX,wd-gold.net
+
 #Paypal.cn
 DOMAIN-SUFFIX,paypal.cn
 
