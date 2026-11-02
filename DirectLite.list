@@ -4,7 +4,7 @@ SRC-IP-CIDR,192.168.100.5/32
 #SRC-IP-CIDR,192.168.100.220/32
 
 #PT网站（直连访问）
-DOMAIN-SUFFIX,hddolby.com
+#DOMAIN-SUFFIX,hddolby.com
 DOMAIN-SUFFIX,52pt.site
 DOMAIN-SUFFIX,hdvideo.one
 DOMAIN-SUFFIX,ultrahd.net
